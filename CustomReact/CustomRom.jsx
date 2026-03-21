@@ -1,10 +1,21 @@
-function customRender(rElement, container) { 
-  const domElement = document.createElement(rElement.type)
-  domElement.innerHTML = rElement.children
-  domElement.setAttribute('href',rElement.props.href)
-  domElement.setAttribute('target', rElement.props.target)
+function customRender(rElement, container) {
+  //v1 problem is we have to manually set the attributes
+  // const domElement = document.createElement(rElement.type)
+  // domElement.innerHTML = rElement.children
+  // domElement.setAttribute('href',rElement.props.href)
+  // domElement.setAttribute('target', rElement.props.target)
   
-  container.appendChild(domElement)
+  // container.appendChild(domElement)
+  // 
+  // 
+  // v2
+  const domElement = document.createElement(rElement.type)
+  domElement.innerHTML = reactElement.children
+  for (const prop in rElement.props) {
+    if (prop === 'children') continue // incase someone had children in props
+    domElement.setAttribute(prop, rElement.props[prop])
+    container.appendChild(domElement)
+  }
 }
 
 
