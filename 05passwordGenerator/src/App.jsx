@@ -1,11 +1,15 @@
 import { useEffect } from 'react'
-import { useState,useCallback } from 'react'
+import { useState,useCallback, useRef } from 'react'
 
 function App() {
   const [length, setLength] = useState(6)
   const [numAllowed, setNumAll] = useState(false)
   const [charAllowed, setCharAll] = useState(false)
   const [pass, setPass] = useState("")
+  
+  //useRef
+  const passRef = useRef(null)
+  
   const passGen = useCallback(() => {
     let pass = "";
     let str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -18,7 +22,13 @@ function App() {
       pass+=str.charAt(char)
     }
     setPass(pass)
-  }, [length,numAllowed,charAllowed,setPass])
+  }, [length, numAllowed, charAllowed, setPass])
+  
+  const copyToCbrd = useCallback(() => {
+    passRef.current?.select() // we can do thhe copy thing without this but good to use annd also helps in highlighting and all that 
+    passRef.current?.setSelectionRange(0,98)
+    window.navigator.clipboard.writeText(pass)
+  },[pass])
   
   useEffect(()=>{passGen()},[length,numAllowed,charAllowed,setPass])
   
@@ -29,8 +39,11 @@ function App() {
               <h1 className='text-blue-300 text-3xl'>Password Generator</h1>
             </div>
           <div>
-            <input className='bg-white text-orange-400 rounded-l-xl rounded-bl-xl pl-4 pr-4 pt-2 pb-2 outline-none w-xl text-2xl' type="text" value={pass} readOnly/>
-            <button className='text-white bg-blue-500 pl-4 pr-4 pt-2 pb-2 rounded-r-xl rounded-br-xl text-2xl shrink-0 '>copy</button>
+          <input className='bg-white text-orange-400 rounded-l-xl rounded-bl-xl pl-4 pr-4 pt-2 pb-2 outline-none w-xl text-2xl'
+            type="text" value={pass} readOnly ref={passRef} />
+          <button
+            onClick={copyToCbrd}
+            className='text-white bg-blue-500 pl-4 pr-4 pt-2 pb-2 rounded-r-xl rounded-br-xl text-2xl shrink-0 '>copy</button>
           </div>
           <div className='flex items-center justify-center gap-x-8 pb-1'>
             <div className='flex items-center gap-x-2'>
