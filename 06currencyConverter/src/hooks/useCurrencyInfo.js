@@ -10,7 +10,7 @@ function useCurrencyInfo(currency) {
       .then((res)=> res.json())
       .then((res)=> setData(res))
   console.table(data)
-  }, [currency])
+  }, [currency, data])
   return data;
 }
 export default useCurrencyInfo
