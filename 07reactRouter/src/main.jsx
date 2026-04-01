@@ -7,6 +7,7 @@ import { createBrowserRouter } from 'react-router'
 import Layout from './Layout.jsx'
 import { About, Contacts, Home, User } from './components/index.js'
 import Github, { GithubInfo } from './components/Github/Github.jsx'
+import { AboutPic } from './components/About/About.jsx'
 
 // const router = createBrowserRouter([
 //   {
@@ -33,7 +34,10 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<Layout></Layout>}>
       <Route path='' element={<Home></Home>} />
-      <Route path='about' element={<About></About>} />
+      <Route
+        loader={ AboutPic }
+        path='about'
+        element={<About></About>} />
       <Route path='contacts' element={<Contacts></Contacts> } />
       <Route path='user/:userId' element={<User></User> } />
       <Route
@@ -47,6 +51,6 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router}/>
+    <RouterProvider router={router} />
   </StrictMode>,
 )

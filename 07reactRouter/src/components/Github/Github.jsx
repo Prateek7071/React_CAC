@@ -25,6 +25,7 @@ export default function Github() {
 }
 
 export const GithubInfo = async () => {
-  const response = fetch("https://api.github.com/users/prateek7071").then(res=>res.json())
-  return  response//this is a promise that we are able to return here
+  const response = await fetch("https://api.github.com/users/prateek7071")
+  if(!response.ok) throw new Error("Failed to fetch github data")
+  return  response.json()//this is a promise that we are able to return here
 }
