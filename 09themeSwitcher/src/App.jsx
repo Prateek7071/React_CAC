@@ -8,10 +8,12 @@ function App() {
   const [themeMode, setThemeMode] = useState("light")
   
   const lightTheme = () => {
+    console.log("Light theme function triggered!");
     setThemeMode("light")
   }
   
   const darkTheme = () => {
+    console.log("Dark theme function triggered!");
     setThemeMode("dark")
   }
   
@@ -24,7 +26,7 @@ function App() {
   }, [themeMode])
   
   return (
-    <ThemeProvider value={{themeMode, lightTheme, darkTheme}}>
+    <ThemeProvider value={{themeMode, darkTheme, lightTheme}}>
       <div className="flex flex-wrap min-h-screen items-center bg-white dark:bg-gray-900">
         <div className="w-full">
           <div className="w-full max-w-sm mx-auto flex justify-end mb-4">
