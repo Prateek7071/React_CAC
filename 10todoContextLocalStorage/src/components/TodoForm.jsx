@@ -16,10 +16,9 @@ function TodoForm() {
   }
   
   return (
-    <form className="flex">
+    <form onSubmit={add} className="flex">
       <input
         type="text"
-        onSubmit={add}
         value={todo}
         onChange={(e)=>setTodo(e.target.value)}
         placeholder="Write Todo..."
