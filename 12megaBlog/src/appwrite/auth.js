@@ -64,7 +64,7 @@ export class AuthService{  //create a class
     try {
       await this.account.get()
     } catch (error) {
-      console.log(error)
+      console.log("Error from getCurrentUser: ",error)
     }
     return null; //incase nothing is there in account.get ,, can also do if else in try
   }
@@ -73,11 +73,11 @@ export class AuthService{  //create a class
     try {
       await this.account.deleteSessions();
     } catch (error) {
-      console.log(error)
+      console.log("Error at logout",error)
     }
   }
 } 
 
-const authService = new AuthService() // created and export object so that methods can be called directly on the object
+export const authService = new AuthService() // created and export object so that methods can be called directly on the object
 
 export default authService

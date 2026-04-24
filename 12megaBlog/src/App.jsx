@@ -1,17 +1,42 @@
-import conf from './conf/conf'
+import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { authService } from './appwrite/auth'
+import { login, logout } from './store/authSlice'
+import { Header, Footer } from './components/index'
+import {Outlet} from 'react-router'
+
 import './App.css'
 
 function App() {
+
+  const [loading, setLoading] = useState(true) // init true so that when we have data we can have it set to false.
+  const dispatch = useDispatch()
   
-  // console.log(import.meta.env.VITE_APPWRITE_URL)
-  // rather than doing this, create a prod grade conf/conf.js which makes sure a string value is returned cause its required that env value is a string so that app dont crash
+  useEffect(() => {
+    authService.getCurrentUser()
+      .then((userData) => {
+        if (userData) {
+          dispatch(login({userData}))
+        } else {
+          dispatch(logout())
+        }
+      })
+      .catch(Error=>console.log(Error))
+      .finally(()=>setLoading(false))
+  }, [dispatch])
   
-  console.log(conf.appwriteURL)
-  return (
-    <>
-      <h1>A blog with Appwrite</h1>
-    </>
-  )
+  return !loading ? (
+    <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
+      <div className='w-full block'>
+        <Header />
+        <main>
+          <Outlet/>
+          
+        </main>
+        <Footer />
+      </div>
+    </div>
+  ) : null
 }
 
 export default App
