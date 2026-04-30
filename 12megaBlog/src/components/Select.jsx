@@ -1,7 +1,7 @@
 import React from 'react';
 import { useId } from 'react';
 
-export default function Select({
+export function Select({
   options,
   label,
   className,
@@ -27,3 +27,5 @@ export default function Select({
     </div>
   );
 }
+
+export default React.forwardRef(Select)
