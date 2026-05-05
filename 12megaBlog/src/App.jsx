@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux'
 import { authService } from './appwrite/auth'
 import { login, logout } from './store/authSlice'
 import { Header, Footer } from './components/index'
-import {Outlet} from 'react-router'
+import { Outlet } from 'react-router'
+import { serializeUser } from './utils/serializerUser'
 
 import './App.css'
 
@@ -16,7 +17,7 @@ function App() {
     authService.getCurrentUser()
       .then((userData) => {
         if (userData) {
-          dispatch(login({userData}))
+          dispatch(login(serializeUser(userData)))
         } else {
           dispatch(logout())
         }

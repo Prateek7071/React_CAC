@@ -7,6 +7,8 @@ import { Button, Input, Logo } from './index'
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
 
+import { serializeUser } from "../utils/serializerUser";
+
 export default function Signup() {
 
   const navigate = useNavigate()
@@ -21,7 +23,7 @@ export default function Signup() {
 
       if (userData) {
         const userData = await authService.getCurrentUser()
-        if (userData) dispatch(login(userData));
+        if (userData) dispatch(login(serializeUser(userData)));
         navigate("/")
       }
     } catch (error) {

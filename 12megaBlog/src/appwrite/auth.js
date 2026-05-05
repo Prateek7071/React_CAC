@@ -37,7 +37,12 @@ export class AuthService{  //create a class
     //it can fail here so catching error
     
     try {
-      const userAccount = await this.account.create(ID.unique(), email, password, name)
+      const userAccount = await this.account.create(
+        ID.unique(),
+        email,
+        password,
+        name
+      )
       if (userAccount) {
         // what we want is if account created might as well log the user in so call another method
         return this.login({email,password})
@@ -57,14 +62,15 @@ export class AuthService{  //create a class
       })
     } catch (error) {
       console.log(error)
+      throw error
     }
   }
   
   async getCurrentUser() {
     try {
-      await this.account.get()
+      return await this.account.get()
     } catch (error) {
-      console.log("Error from getCurrentUser: ",error)
+      console.log("Error from getCurrentUser: ", error)
     }
     return null; //incase nothing is there in account.get ,, can also do if else in try
   }

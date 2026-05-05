@@ -1,10 +1,9 @@
 //important go thru again
-
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, Input, Select,RTE} from '../index'
-import { service as appwriteService } from '../../appwrite/config';
+import appwriteService from '../../appwrite/config';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 
@@ -21,7 +20,7 @@ export default function PostForm({ post }) {
   //watch: to monitor any field we use watch
 
   const navigate = useNavigate()
-  const userData = useSelector(state => state.user.userData)
+  const userData = useSelector(state => state.auth.userData)
 
   const submit = async (data) => {
     if (post) {
