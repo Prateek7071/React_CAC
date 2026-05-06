@@ -111,3 +111,28 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.browser-css {
+  color: var(--text);
+}
+.browser-css p,
+.browser-css span,
+.browser-css div,
+.browser-css li,
+.browser-css td,
+.browser-css th {
+  color: var(--text);
+}
+.browser-css h1,
+.browser-css h2,
+.browser-css h3,
+.browser-css h4,
+.browser-css h5,
+.browser-css h6,
+.browser-css strong,
+.browser-css b {
+  color: var(--text-h);
+}
+.browser-css a {
+  color: var(--accent);
+}

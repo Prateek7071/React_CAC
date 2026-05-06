@@ -12,7 +12,7 @@ export default function EditPost() {
   //to retrieve all values whenever there is any change in slug
   useEffect(() => {
     if (slug) {
-      appwriteService.getPosts(slug).then((post) => {
+      appwriteService.getPost(slug).then((post) => {
         if (post) {
           setPosts(post)
         }
@@ -21,7 +21,7 @@ export default function EditPost() {
     } else {
       navigate('/')
     }
-  },[slug,navigate,post])
+  },[slug,navigate])
   
   return post? (
     <div className='py-8'>

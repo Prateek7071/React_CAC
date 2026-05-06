@@ -6,6 +6,7 @@ import { Button, Input, Logo} from './index'
 import { useDispatch } from "react-redux";
 import authService from "../appwrite/auth";
 
+import { serializeUser } from "../utils/serializerUser";
 import {useForm} from 'react-hook-form'
 
 function Login() {
@@ -22,7 +23,7 @@ function Login() {
       if (session) {
         const userData = await authService.getCurrentUser()
         if (userData) {
-          dispatch(authLogin(userData)) //aka store login
+          dispatch(authLogin({ userData: serializeUser(userData) })) //aka store login
           navigate("/") // if use link the user need to click it so use navigate
         }
       }
@@ -45,7 +46,7 @@ function Login() {
         <h2 className="text-center text-2xl font-bold leading-tight">
           Sign in to your account
         </h2>
-        <p className="mt-2 text-center text-base text-black/60">
+        <p className="mt-2 text-center text-base text-[var(--text)]">
           Don&apos;t have any account?&nbsp;
           <Link
             to="/signup"

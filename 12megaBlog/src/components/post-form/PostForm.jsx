@@ -11,7 +11,7 @@ export default function PostForm({ post }) {
   const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
     defaultValues: {
       title: post?.title || "",
-      slug: post?.slug || "",
+      slug: post?.$id || "",
       content: post?.content || "",
       status: post?.status || "active"
       
@@ -24,14 +24,15 @@ export default function PostForm({ post }) {
 
   const submit = async (data) => {
     if (post) {
-      data.image[0] ? appwriteService.uploadFile(data.image[0]) : null;
-      const file= await appwriteService.uploadFile(data.image[0])
+      // data.image[0] ? appwriteService.uploadFile(data.image[0]) : null;
+      // const file = await appwriteService.uploadFile(data.image[0])
+      const file = data.image?.[0]? await appwriteService.uploadFile(data.image[0]):null
       if (file) {
         appwriteService.deleteFile(post.featuredImage)
       }
       const dbPost = await appwriteService.updatePost(post.$id, {
         ...data,
-        featuredImage: file? file.$id: undefined
+        featuredImage: file? file.$id: post.featuredImage
       })
 
       if (dbPost) {
@@ -43,9 +44,14 @@ export default function PostForm({ post }) {
       if (file) {
         const fieldId = file.$id
         data.featuredImage = fieldId
+
+        console.log("userData:", userData)
+        console.log("userID being sent:", userData?.$id)
+        console.log("full data:", { ...data, userID: userData?.$id })
+        
         const dbPost = await appwriteService.createPost({
           ...data,
-          userId: userData.$id,
+          userID: userData?.$id,
         })
         if (dbPost) {
           navigate(`/post/${dbPost.$id}`)
@@ -59,9 +65,9 @@ export default function PostForm({ post }) {
       return value
         .trim()
         .toLowerCase()
-        .replace(/^[a-zA-Z\d\s]+/g, '-')
-        .replace(/\s/g, '-')
-        .replace(/-+/g,'-')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '')
+        .substring(0,36)
     }
     return ""
   }, [])
@@ -69,7 +75,7 @@ export default function PostForm({ post }) {
   useEffect(() => {
     const subscription = watch((value, { name }) => {
       if (name === 'title') {
-        setValue('slug', slugTransform(value.title, {shouldValidate:true} ))
+        setValue('slug', slugTransform(value.title), {shouldValidate:true})
       }
     })
     return () => subscription.unsubscribe() 

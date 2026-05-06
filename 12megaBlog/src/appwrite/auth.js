@@ -9,7 +9,7 @@ import { Client, Account, ID } from "appwrite";
 // const account = new Account(client);
 
 // const user = await account.create({
-//     userId: ID.unique(), 
+//     userID: ID.unique(), 
 //     email: 'email@example.com', 
 //     password: 'password'
 // });

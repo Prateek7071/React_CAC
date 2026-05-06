@@ -23,7 +23,7 @@ export default function Signup() {
 
       if (userData) {
         const userData = await authService.getCurrentUser()
-        if (userData) dispatch(login(serializeUser(userData)));
+        if (userData) dispatch(login({ userData: serializeUser(userData) }));
         navigate("/")
       }
     } catch (error) {
@@ -45,7 +45,7 @@ export default function Signup() {
         <h2 className="text-center text-2xl font-bold leading-tight">
           Login in to your account
         </h2>
-        <p className="mt-2 text-center text-base text-black/60">
+        <p className="mt-2 text-center text-base text-[var(--text)]">
           Already have any account?&nbsp;
           <Link
             to="/login"

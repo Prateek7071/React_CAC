@@ -12,10 +12,10 @@ export default function Post() {
 
     const userData = useSelector((state) => state.auth.userData);
 
-    const isAuthor = post && userData ? post.userId === userData.$id : false;
+    const isAuthor = post && userData ? post.userID === userData.$id : false;
 
     useEffect(() => {
-        if (slug) {
+      if (slug) {
             appwriteService.getPost(slug).then((post) => {
                 if (post) setPost(post);
                 else navigate("/");
@@ -58,7 +58,7 @@ export default function Post() {
                 <div className="w-full mb-6">
                     <h1 className="text-2xl font-bold">{post.title}</h1>
                 </div>
-                <div className="browser-css">
+                <div className="browser-css text-[var(--text)] [&_p]:text-[var(--text)] [&_span]:text-[var(--text)] [&_div]:text-[var(--text)] [&_li]:text-[var(--text)] [&_a]:text-[var(--accent)] [&_h1]:text-[var(--text-h)] [&_h2]:text-[var(--text-h)] [&_h3]:text-[var(--text-h)] [&_strong]:text-[var(--text-h)] [&_b]:text-[var(--text-h)]">
                     {parse(post.content)}
                     </div>
             </Container>

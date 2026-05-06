@@ -17,7 +17,7 @@ function App() {
     authService.getCurrentUser()
       .then((userData) => {
         if (userData) {
-          dispatch(login(serializeUser(userData)))
+          dispatch(login({userData:serializeUser(userData)}))
         } else {
           dispatch(logout())
         }

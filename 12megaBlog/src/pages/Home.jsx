@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 export default function Home() {
   const [post, setPosts] = useState([])
   useEffect(() => {
-    appwriteService.getPost().then((post) => {
+    appwriteService.getPosts().then((post) => {
       if (post) {
         setPosts(post.documents)
       }
